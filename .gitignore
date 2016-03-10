@@ -34,11 +34,6 @@ bld/
 *.VisualState.xml
 TestResult.xml
 
-# Build Results of an ATL Project
-[Dd]ebugPS/
-[Rr]eleasePS/
-dlldata.c
-
 # DNX
 project.lock.json
 artifacts/
@@ -68,29 +63,11 @@ artifacts/
 *.svclog
 *.scc
 
-# Chutzpah Test files
-_Chutzpah*
-
-# Visual C++ cache files
-ipch/
-*.aps
-*.ncb
-*.opendb
-*.opensdf
-*.sdf
-*.cachefile
-
 # Visual Studio profiler
 *.psess
 *.vsp
 *.vspx
 *.sap
-
-# TFS 2012 Local Workspace
-$tf/
-
-# Guidance Automation Toolkit
-*.gpState
 
 # ReSharper is a .NET coding add-in
 _ReSharper*/
@@ -214,12 +191,6 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-
-# Visual Studio 6 build log
-*.plg
-
-# Visual Studio 6 workspace options file
-*.opt
 
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
