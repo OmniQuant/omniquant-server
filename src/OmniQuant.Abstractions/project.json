@@ -4,15 +4,13 @@
     "warningsAsErrors": true
   },
   "dependencies": {
-    "Newtonsoft.Json": "8.0.2",
-    "Microsoft.CodeAnalysis": "1.1.1"
   },
   "frameworks": {
-    "dnx451": {
+    "net451": {
     },
     "dnxcore50": {
       "dependencies": {
-        "NETStandard.Library": "1.0.0-rc2-*"
+        "NETStandard.Library": "1.0.0-*"
       }
     }
   }
