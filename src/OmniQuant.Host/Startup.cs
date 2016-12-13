@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.Logging;
+using OmniQuant.QuantWeb;
 
 namespace OmniQuant.Host
 {
@@ -10,25 +12,26 @@ namespace OmniQuant.Host
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IApplicationEnvironment applicationEnvironment)
+        public Startup(IHostingEnvironment env)
         {
-            var configBuilder = new ConfigurationBuilder()
-                .SetBasePath(applicationEnvironment.ApplicationBasePath)
-                .AddJsonFile("config.json")
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
                 .AddEnvironmentVariables()
                 .AddCommandLine(new string[0]);
-            Configuration = configBuilder.Build();
+            Configuration = builder.Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IMemoryCache, MemoryCache>();
             services.AddOptions();
+            services.AddMvc();
         }
-
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseExceptionHandler("/error");
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            app.UseQuantWeb(new QuantWebOptions());
         }
     }
 }

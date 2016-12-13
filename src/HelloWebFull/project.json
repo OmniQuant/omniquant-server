@@ -1,21 +1,14 @@
 {
-  "compilationOptions": {
+  "buildOptions": {
     "emitEntryPoint": true
   },
   "dependencies": {
-    "Microsoft.AspNetCore.IISPlatformHandler": "1.0.0-*",
-    "Microsoft.AspNetCore.HttpOverrides": "1.0.0-*",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*"
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
+    "NETStandard.Library": "1.6.1"
   },
   "frameworks": {
-    "net451": { },
-    "netstandardapp1.3": {
-      "dependencies": {
-        "NETStandard.Library": "1.0.0-*"
-      },
-      "imports": [
-        "dnxcore50"
-      ]
-    }
+    "net451": {},
+    "netstandardapp1.3": {}
   }
 }

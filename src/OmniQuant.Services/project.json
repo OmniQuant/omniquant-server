@@ -1,0 +1,12 @@
+﻿{
+  "version": "1.0.0-*",
+  "buildOptions": {},
+
+  "dependencies": {
+    "Microsoft.DotNet.ProjectModel.Workspaces": "1.0.0-preview2-1-003177"
+  },
+
+  "frameworks": {
+    "net451": {}
+  }
+}

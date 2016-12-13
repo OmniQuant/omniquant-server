@@ -1,0 +1,13 @@
+﻿{
+  "resources": [
+    "/images/favicon.ico",
+    "/images/logo.jpg",
+    "/images/logo_gray_background-2.png",
+    "/Scripts/dateformat.js",
+    "/Scripts/logs.js",
+    "/Scripts/app-main.js",
+    "/Scripts/app.js",
+    "/Scripts/admin.js",
+    "/Scripts/dateformat.js"
+  ]
+}

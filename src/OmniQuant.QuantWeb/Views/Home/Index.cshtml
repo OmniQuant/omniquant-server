@@ -1,0 +1,713 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style>
+        a {
+            color: darkslategray;
+        }
+    </style>
+    <link rel="icon" href="~/images/favicon.ico" type="image/x-icon" />
+
+    <!-- jquery -->
+    <script src="~/Scripts/Components/jquery/jquery.js"></script>
+
+    <!-- jquery ui -->
+    <script src="~/Scripts/Components/jquery-ui/jquery-ui.js"></script>
+
+    <!-- layout -->
+    <script src="~/Scripts/Components/jquery.layout.js/index.js"></script>
+    <link rel="stylesheet" href="~/Scripts/Components/jquery.layout.css/index.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="~/Scripts/Components/bootstrap/dist/css/bootstrap.css">
+    <script src="~/Scripts/Components/bootstrap/dist/js/bootstrap.js"></script>
+    <style type="text/css">
+        th {
+            font-weight: normal;
+        }
+
+        .list-group-item.logs-group {
+            background-color: #f6f6f6;
+            color: #517595;
+            text-align: center;
+            cursor: default;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        #disableButton, #disableButton:focus {
+            outline: none;
+        }
+
+        .list-group-item p span > span {
+            color: #517595;
+        }
+
+        .list-group-item.disabled, .list-group-item.disabled:focus, .list-group-item.disabled:hover, .list-group-item.disabled p span {
+            cursor: default;
+            color: #c9c9c9;
+        }
+
+        /*.list-group-item button {
+            visibility: hidden;
+        }
+
+         .list-group-item:hover button {
+            visibility: visible;
+        }*/
+
+        .pgCell input:invalid {
+            background-color: #FFD1D1;
+            border-color: #ff8282;
+        }
+
+        .pgTable {
+            width: 100%;
+        }
+
+        .pgCell input[type='checkbox'] {
+            margin-left: 10px;
+            margin-right: -8px;
+            width: 40px;
+        }
+
+        .pgCell input, select {
+            width: 100%;
+            padding-left: 3px;
+            padding-right: 3px;
+            border-color: #cccccc;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 3px;
+        }
+
+        .pgCell select {
+            padding: 3px;
+            padding-left: 1px;
+        }
+
+        .fillsFooter {
+            width: 100%;
+        }
+
+        .fillsSearchbox {
+            margin-top: 10px;
+            float: left;
+        }
+
+        .fillsPage {
+            margin-top: 7px;
+            float: right;
+        }
+
+        .fillsTable {
+            margin-top: -6px;
+        }
+
+        .cmb-menu {
+            color: #777;
+            background-color: #fdfdfd;
+            border-color: #dddddd;
+        }
+
+        .progress {
+            background: rgba(245, 245, 245, 1);
+            border: 1px solid rgba(221, 221, 221, 1);
+            border-radius: 4px;
+            height: 20px;
+        }
+
+        .progress-bar-custom {
+            background: rgba(66, 139, 202, 1);
+        }
+    </style>
+
+    <!-- fuelex -->
+    <link rel="stylesheet" href="~/Scripts/Components/fuelux/dist/css/fuelux.css">
+    <script src="~/Scripts/Components/fuelux/dist/js/fuelux.js"></script>
+
+    <!-- highcharts -->
+    <script src="~/Scripts/Components/highstock/highstock.js"></script>
+    <script src="~/Scripts/Components/highstock/modules/exporting.js"></script>
+
+    <!-- linq -->
+    <script src="~/Scripts/Components/linq.js/linq.js"></script>
+
+    <!-- codemirror -->
+    <script src="~/Scripts/Components/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="~/Scripts/Components/codemirror/lib/codemirror.css">
+
+    <!-- datatables -->
+    <link rel="stylesheet" href="~/Scripts/Components/datatables.net-bs/css/dataTables.bootstrap.css">
+    <script src="~/Scripts/Components/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="~/Scripts/Components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+
+    <!-- propery grid -->
+    <script src="~/Scripts/Components/jqPropertyGrid/jqPropertyGrid.js"></script>
+    <link rel="stylesheet" href="~/Scripts/Components/jqPropertyGrid/jqPropertyGrid.css">
+
+    <!-- bootstrap select http://silviomoreto.github.io-->
+    <link rel="stylesheet" href="~/Scripts/Components/bootstrap-select/dist/css/bootstrap-select.css">
+    <script src="~/Scripts/Components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+</head>
+
+<body id="b" style="">
+
+    <!-- NORTH -->
+
+    <div class="ui-layout-north" style="padding: 10px 10px 0px 10px">
+
+        <!-- strategy nav bar -->
+        <nav class="navbar navbar-default" style="margin-bottom: 0; height: 35px; ">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav" style="margin-left: -30px">
+
+                        <li><img src="~/images/logo_gray_background-2.png" width="41" height="40" alt="www.smartquant.com" style="margin-top: 4px; margin-left: 15px; margin-right: 5px" /></li>
+
+                        <li id="save-file" style="margin-top: -1px"><a href="#" onclick="saveFile(true)">Save File</a></li>
+                        <li id="build-solution" style="margin-top: -1px"><a href="#" onclick="buildSolutionAsync();">Build Solution</a></li>
+                        <li id="run-project" style="margin-top: -1px"><a href="#" onclick="runProjectAsync('')">Run Project </a></li>
+                        <li>
+                            <div style="margin-top: 8px">
+                                <select class="selectpicker" style="" data-style="cmb-menu" data-width="145px" id="run-project-menu">
+                                    <option> </option>
+                                </select>
+                            </div>
+                        </li>
+                        <li id="stop-project" style="margin-top: -1px; margin-left: 12px"><a href="#" onclick="stopProcess();">Stop Project</a></li>
+
+                        <li class="diag" style="visibility: hidden; margin-left: +5px;"><a href="#" onclick="">|</a></li>
+
+                        <li class="dropdown diag" id="diagnostic" style="visibility: hidden">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Diagnostic <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" onclick="getJsonInstruments()">Get Instruments JSON</a></li>
+                                <li><a href="#" onclick="getFullJson()">Get Data JSON</a></li>
+                                <li><a href="#" onclick="runProject('Backtest', true)">Emulate Run</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" onclick="clearOutput()">Clear Output</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right" style="margin-right:-25px">
+                        <form action="/site/Account/LogOff" class="nav navbar-nav" id="logoutForm" method="post">
+                            <input name="__RequestVerificationToken" type="hidden" value="nssqdj2gKntTZ2Qrv9tClCn5d-zmO9c1bycD73w3BQwsATbUkN4xwTnOU_Qa20U0TwRQH9ZpVro7hwdTnpADvVdrMc27fEnKdrtfbn_LshnfD4jAk02WNrRM21NKOgcC1wBc3FOcBQ-VtCdmJAPxzQ2" />                            <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Log off</a></li>
+                        </form>
+                    </ul>
+
+                    <div style="float: right; margin-right: 0px; margin-top: 4px">
+                        <h4><span class="label label-default" id="lblUsername"></span></h4>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <!-- WEST -->
+
+    <div class="ui-layout-west" style="padding: 0px 0px 0px 10px; overflow-y: hidden">
+        <div style="height: 90%; margin:0; padding:0">
+
+            <!-- tabs -->
+            <ul class="nav nav-tabs" role="tablist" id="tabs">
+                <li role="presentation" class="active"><a href="#solutionexplorer" aria-controls="solutionexplorer" role="tab" data-toggle="tab" id="solution-explorer">Solution Explorer</a></li>
+
+                <li role="presentation"><a href="#instruments" aria-controls="instruments" role="tab" data-toggle="tab">Instruments</a></li>
+
+
+            </ul>
+
+            <!-- pages -->
+            <div class="panel panel-default" id="left-pages" style="width: 100%; height: 100%; margin-top: -1px">
+                <div class="tab-content">
+
+                    <!-- solution explorer page -->
+                    <div role="tabpanel" class="tab-pane active" id="solutionexplorer">
+
+                        <div id="treeParent">
+                            <ul class="tree" role="tree" id="treeSolution" style="border: 0px; font-size: 14px; max-height: 526px; overflow-y: auto;">
+                                <li class="tree-branch hide" data-template="treebranch" role="treeitem" aria-expanded="false">
+                                    <div class="tree-branch-header">
+                                        <button type="button" class="tree-branch-name">
+                                            <span class="glyphicon icon-caret glyphicon-play"></span>
+                                            <span class="glyphicon icon-folder glyphicon-folder-close"></span>
+                                            <span class="tree-label"></span>
+                                        </button>
+                                    </div>
+                                    <ul class="tree-branch-children" role="group"></ul>
+                                    <div class="tree-loader" role="alert">Loading...</div>
+                                </li>
+                                <li class="tree-item hide" data-template="treeitem" role="treeitem">
+                                    <button type="button" class="tree-item-name">
+                                        <span class="glyphicon icon-item fueluxicon-bullet"></span>
+                                        <span class="tree-label"></span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- instruments page -->
+                    <div role="tabpanel" class="tab-pane" id="instruments" style="">
+                        <ul class="tree" role="tree" id="treeInstruments" style="border: 0px; font-size: 14px; overflow-y: auto;">
+                            <li class="tree-branch hide" data-template="treebranch" role="treeitem" aria-expanded="false">
+                                <div class="tree-branch-header">
+                                    <button type="button" class="tree-branch-name">
+                                        <span class="glyphicon icon-caret glyphicon-play"></span>
+                                        <span class="glyphicon icon-folder glyphicon-folder-close"></span>
+                                        <span class="tree-label"></span>
+                                    </button>
+                                </div>
+                                <ul class="tree-branch-children" role="group"></ul>
+                                <div class="tree-loader" role="alert">Loading...</div>
+                            </li>
+                            <li class="tree-item hide" data-template="treeitem" role="treeitem">
+                                <button type="button" class="tree-item-name">
+                                    <span class="glyphicon  fueluxicon-bullet"></span>
+                                    <span class="tree-label"></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- EAST -->
+
+    <div class="ui-layout-east" style="padding: 0px 10px 0px 0px; overflow-y: hidden">
+        <div style="height: 90%; margin: 0; padding: 0">
+
+            <!-- tabs -->
+
+            <ul class="nav nav-tabs" role="tablist" id="right-tabs">
+
+
+                <li role="presentation" class="active"><a href="#logs" aria-controls="logs" role="tab" data-toggle="tab">Logs</a></li>
+                <li role="presentation" class=""><a href="#properties" aria-controls="properties" role="tab" data-toggle="tab">Properties</a></li>
+            </ul>
+
+            <!-- pages -->
+            <div class="panel panel-default" id="right-pages" style="width: 100%; height: 100%; margin-top: -1px">
+                <div class="tab-content">
+
+                    <!-- logs -->
+                    <div role="tabpanel" class="tab-pane active" id="logs">
+                        <div class="panel-body" style="height: 100%;">
+                            <div id="pg-logs" style="overflow-y: auto; height: 300px;">
+                                <div id="logList" class="list-group" style="">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- properties page -->
+                    <div role="tabpanel" class="tab-pane" id="properties" style="padding: 14px; padding-top: 16px; overflow-y: auto;">
+                        <div id="propGrid" style=""></div>
+
+                        <div id="userCommand" class="panel panel-default" style="margin-top:25px">
+                            <div class="panel-heading" style="height: 35px;">
+                                <div style="padding:0px; margin-top:-4px; margin-left:-10px; font-weight:bold">User Command</div>
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    <input type="" class="form-control input" placeholder="" id="txtUserCommand" style="width:100%" />
+                                    <input type="submit" value="Send" class="btn btn-default" id="btnSendCommand" style="margin-top: 10px; width:100px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOUTH -->
+
+    <div class="ui-layout-south" style="overflow-y: hidden; padding:0px 10px 10px 10px">
+        <!-- log pages -->
+        <div style="width:100%">
+
+            <!-- tabs -->
+            <ul class="nav nav-tabs" role="tablist" id="log-tabs">
+                <li role="presentation"><a href="#log-pages-output" aria-controls="log-pages-output" role="tab" data-toggle="tab">Output</a></li>
+                <li role="presentation" class="active"><a href="#log-pages-build" aria-controls="log-pages-build" role="tab" data-toggle="tab">Build Log</a></li>
+            </ul>
+
+            <div class="panel panel-default" id="log-pages" style="width: 100%; margin-top: -1px">
+                <div class="tab-content">
+
+                    <!-- output -->
+                    <div role="tabpanel" class="tab-pane" id="log-pages-output">
+                        <div class="panel-body" style="height: 100%;">
+                            <div style="height: 170px">
+                                <textarea id="txtOutput" style="width: 100%; height: 100%; border-color: #DDDDDD; border-style: solid; border-width: 1px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- build log -->
+                    <div role="tabpanel" class="tab-pane" id="log-pages-build">
+                        <div class="panel-body" style="height: 100%;">
+                            <div style="height: 170px">
+                                <textarea id="txtBuildLog" style="width: 100%; height: 100%; border-color: #DDDDDD; border-style: solid; border-width: 1px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default" id="status-bar" style="height: 41px; background-color: #f5f5f5; margin-top:-10px">
+            <div class="panel-body" style="">
+
+                <div class="" style="float: right; margin-top: -5px; width: auto; text-align: right; margin-left: 15px; margin-right: 0px">
+                    <p id="lblSimulationDate">01-01-0001 00:00:00</p>
+                </div>
+                <div class="progress" style="float: right; margin-top: -5px; width: 20%">
+                    <div id="prgSimulation" class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    </div>
+                </div>
+                <div class="" style="float: right; margin-top: -5px; width: 150px; text-align: right; margin-right: 17px">
+                    <p id="lblSimlulation">Simulation</p>
+                </div>
+
+                <div class="" style="float: left; margin-top: -5px; width: 250px">
+                    <p id="lblStatus">Ready</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CENTER -->
+
+    <div class="ui-layout-center" style="padding: 0px 0px 0px 0px; overflow-y: hidden">
+
+        <!-- editor , results -->
+        <div style="float: left; width: 100%; padding-left: 0px; height: 100%">
+            <div style="height: 100%">
+
+                <!-- tabs -->
+                <ul class="nav nav-tabs" role="tablist" id="tabs">
+
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                    <li role="presentation"><a href="#solutions" aria-controls="solutions" role="tab" data-toggle="tab">Solutions</a></li>
+
+                    <li role="presentation"><a href="#editor" aria-controls="editor" role="tab" data-toggle="tab" id="tabEditor">Editor</a></li>
+
+
+                    <li role="presentation"><a href="#hbarChart" aria-controls="hbarChart" role="tab" data-toggle="tab" id="htabBarChart">Chart</a></li>
+                    <li role="presentation"><a href="#fills" aria-controls="fills" role="tab" data-toggle="tab" id="tabFills">Fills</a></li>
+
+
+                </ul>
+
+                <!-- pages -->
+                <div class="panel panel-default" id="pages" style="width: 100%; height: 529px; margin-top: -1px">
+                    <div class="tab-content">
+
+                        <!-- home page -->
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="panel-body">
+                                <div id="pg-home" style="overflow-y:auto; height:100px;">
+
+                                    <h4>Documentation</h4>
+                                    <a href="http://www.smartquant.com/openquant2014/doc/Introduction%20to%20OpenQuant%202014%20for%20OpenQuant%20users.pdf" target="_blank">Introduction to OpenQuant 2014 for OpenQuant Users</a><br />
+                                    <a href="http://www.smartquant.com/openquant2014/doc/Developing%20Algo%20Trading%20Applications%20with%20SmartQuant%20Framework.pdf" target="_blank">Developing Algo Trading Applications with SmartQuant Framework</a><br />
+                                    <a href="http://www.smartquant.com/openquant2014/doc/Developing%20Algo%20Trading%20Strategies%20with%20SmartQuant%20Framework.pdf" target="_blank">Developing Algo Trading Strategies with SmartQuant Framework</a><br />
+                                    <a href="http://www.smartquant.com/openquant2014/doc/OpenQuant%202014%20FAQ.pdf" target="_blank">OpenQuant 2014 Frequently Asked Questions</a><br />
+                                    <a href="http://www.smartquant.com/openquant2014/doc/OpenQuant%202014%20API.pdf" target="_blank">API References</a><br />
+
+                                    <br />
+                                    <h4>QuantWeb Demo</h4>
+                                    <p>
+                                        Click Run Project in the main menu and see results in the Chart or Fill tabs. Then modify existing sample strategies or develop your own strategy to backtest it on included data sample, or to paper trade it live with simulated data feed.
+                                    </p>
+
+                                    <br />
+                                    <h4>QuantWeb Setup</h4>
+                                    <p>
+                                        SmartQuant web setup represents a complete SmartQuant product line running on a cloud server and serving multiple users. Such enterprise-wide setup can be deployed on your company cloud, in-house or co-located server. It can also be used in educational and social trading projects.
+                                    </p>
+                                    <img src="http://www.smartquant.com/images/sqweb_flow.jpg" /><br />
+
+                                    <b><i>QuantRouter</i></b><br />
+                                    <br>
+                                    - Aggregation, consolidation and replication of multiple data fees
+                                    <br>
+                                    - Smart order routing to multiple brokers
+                                    <br>
+                                    - Feed aggregation and order execution algorithms
+                                    <br>
+                                    - Risk management and limits
+                                    <br>
+                                    - Portfolio consolidation and reporting
+                                    <br>
+                                    <br>
+                                    <b><i>QuantBase</i></b>
+                                    <br>
+                                    <br>
+                                    - Historical data server with multiple user access
+                                    <br>
+                                    - Time series and financial objects data base
+                                    <br>
+                                    <br>
+                                    <b><i>OpenQuant</i></b>
+                                    <br>
+                                    <br>
+                                    - Strategy simulation, optimization and live trading engine
+                                    <br>
+                                    <br>
+                                    <b><i>QuantController</i></b>
+                                    <br>
+                                    <br>
+                                    - Monitoring, controlling and logging multiple trading strategies
+                                    <br>
+                                    <br>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- solutions page -->
+                        <div role="tabpanel" class="tab-pane " id="solutions">
+                            <div class="panel-body" style="height: 100%;">
+                                <div id="pg-solutions" style="overflow-y: auto; height: 100%;">
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item" onclick="showSolution('SMACrossover')">SMACrossover</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('BollingerBands')">BollingerBands</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('ChannelBreakout')">ChannelBreakout</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('Components')">Components</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('Roll')">Roll</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('RSI')">RSI</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('SlowTurtle')">SlowTurtle</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('SMAProfitLoss')">SMAProfitLoss</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('Spread')">Spread</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('VWAP')">VWAP</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('RealTime')">RealTime</a>
+                                        <a href="#" class="list-group-item" onclick="showSolution('MySolution')">MySolution</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- editor page -->
+                        <div role="tabpanel" class="tab-pane" id="editor">
+                            <div class="panel-body" style="height: 100%;">
+                                <div class="panel panel-default" style="border-radius: 0px">
+                                    <div id="pg-editor" style="height: 495px;">
+                                        <textarea id="txtEditor" style="width: 100%; height: 100%; border-color: #DDDDDD; border-style: solid; border-width: 1px; font-size: 13px"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- input -->
+                        <div role="tabpanel" class="tab-pane" id="input">
+                            <div class="panel-body" style="height: 100%;">
+                                <div id="pg-input" style="overflow-y: auto; height: 300px;">
+                                    <div id="lifeInputList" class="list-group" style="">
+                                        <div class="list-group">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- bar chart page hc -->
+
+                        <div role="tabpanel" class="tab-pane" id="hbarChart">
+                            <div class="panel-body" style="height: 100%;">
+
+                                <!-- chart selector -->
+                                <div id="cmbChartSelectorParent">
+                                    <div class="input-group input-append dropdown combobox" data-initialize="combobox" id="cmbChartSelector">
+                                        <input type="text" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right" id="cmbChartSelectorItems">
+                                                <!-- items -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- chart -->
+
+                                <div id="hchartPaneBar" style="width: 100%; height: 465px;"></div>
+                            </div>
+                        </div>
+
+                        <!-- bar chart page hc 2 -->
+
+                        <div role="tabpanel" class="tab-pane" id="hbarChart2">
+                            <div class="panel-body" style="height: 100%;">
+                                <div id="hchartPaneBar2" style="width: 100%; height: 465px;"></div>
+                            </div>
+                        </div>
+
+                        <!-- fills -->
+                        <div role="tabpanel" class="tab-pane" id="fills">
+                            <div id="table1" class="panel-body" style="height: 100%;">
+                                <div class="panel panel-default" style="border-radius: 0px; border-width:1px">
+                                    <table id="gridFills" class="table table-striped table-bordered" style="font-size: 13px; border-width:0px; border-bottom-width:1px"></table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- transactions -->
+                        <div role="tabpanel" class="tab-pane" id="transactions">
+                            <div id="table-transactions" class="panel-body" style="height: 100%;">
+                                <div class="panel panel-default" style="border-radius: 0px; border-width:1px">
+                                    <table id="gridTransactions" class="table table-striped table-bordered" style="font-size: 13px; border-width:0px; border-bottom-width:1px"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+
+
+
+<script>
+
+    var baseUrl = "@ViewData["BaseUrl"]";
+
+    //$.ajaxSetup({
+    //    headers:
+    //    {
+    //        'Authorization': 'Basic javagg',
+    //        'Origin': '*'
+    //    }
+    //});
+
+    function showUsername() {
+        $('#lblUsername').text('javagg');
+    }
+
+    function setSiteMode() {
+        var mode = 'SQ';
+        _MODE = mode === 'GQ' ? siteMode.GQ : siteMode.SQ;
+    }
+
+    function setDebugMode() {
+        var d = getURLParameter('debug');
+        if (d !== undefined && d === 'true') _DEBUG = true;
+
+        if (_DEBUG) {
+            $('.diag').css('visibility', 'visible');
+        }
+    }
+
+    $(document).ready(function () {
+        //window.app = new App(baseUrl);
+
+        setSiteMode();
+        setDebugMode();
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
+
+        $('.nav-tabs a').on('shown.bs.tab', function () {
+            _editor.refresh();
+            if (chart !== undefined) chart.reflow();
+
+            if (_MODE === siteMode.GQ) {
+                if (chart2 !== undefined) chart2.reflow();
+            }
+        });
+
+        _output = new Output($('#txtOutput'));
+        _buildLog = new BuildLog($('#txtBuildLog'));
+        _groups = new Groups();
+        _tree = new Tree(baseUrl, $('#treeSolution'), $('#treeParent'));
+
+        initEditor();
+        clearEditor();
+
+        initGridFills();
+
+        if (_MODE === siteMode.GQ) {
+            initGridTransactions();
+        }
+
+        createLayout();
+        //_layout.allowOverflow('east');
+        _layout.allowOverflow('north');
+
+
+        _tree.initialize();
+
+        if (_MODE === siteMode.GQ) {
+            initTreeLifeObjects();
+        } else {
+            initTreeInstruments();
+        }
+
+        createChartSelector();
+        $('#cmbChartSelector').combobox('disable');
+
+        clearLogs();
+
+        $('#txtOutput').val('');
+        writeToOutput("w", "Hello :)");
+        showUsername();
+        $("#txtEditor").val('');
+
+        $('#log-tabs a[href="#log-pages-output"]').tab('show'); //fix, без этого не показывает контент
+
+        _prgSimulation = $('#prgSimulation');
+        _lblSimulationDate = $('#lblSimulationDate');
+        _lblStatus = $('#lblStatus');
+
+        adminPage = new AdminPage('', false);
+        AdminPage.console = _output;
+
+        properties = new Properties();
+        properties.callback = onPropertyChanged;
+
+        strategies = new Strategies(baseUrl + '/strategies', false);
+        strategies.singleMode = true;
+
+        clearProperties();
+
+        if (_MODE === siteMode.SQ) {
+            app.logs.refresh(false);
+            resumeUpdate();
+        }
+        else {
+            showSolution('LifeTest Input');
+        }
+    });
+</script>
+
+<script src="/Scripts/logs.js"></script>
+<script src="/Scripts/app-main.js"></script>
+<script src="/Scripts/app.js"></script>
+<script src="/Scripts/admin.js"></script>
+<script src="/Scripts/dateformat.js"></script>
+</html>
+

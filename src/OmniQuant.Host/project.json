@@ -1,36 +1,22 @@
 {
   "version": "1.0.0-*",
-  "compilationOptions": {
+  "buildOptions": {
+    "emitEntryPoint": true,
     "warningsAsErrors": true
   },
   "dependencies": {
-    "Microsoft.AspNetCore.Diagnostics": "1.0.0-*",
-    "Microsoft.AspNetCore.Hosting": "1.0.0-*",
-    "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-*",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*",
-    "Microsoft.AspNetCore.WebSockets.Server": "0.1.0-rc2-*",
-    "Microsoft.CodeAnalysis": "1.1.1",
-    "Microsoft.Extensions.Caching.Abstractions": "1.0.0-*",
-    "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
-    "Microsoft.Extensions.Configuration": "1.0.0-*",
-    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-*",
-    "Microsoft.Extensions.Configuration.Binder": "1.0.0-*",
-    "Microsoft.Extensions.Configuration.CommandLine": "1.0.0-*",
-    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-*",
-    "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0-*",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
-    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
-    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-*",
-    "Newtonsoft.Json": "8.0.2",
-    "OmniQuant.Abstractions": "1.0.0-*",
-    "System.Net.WebSockets": "4.0.0-beta-*"
-  },
+    "OmniQuant.QuantWeb": "*",
+    "NETStandard.Library": "1.6.1"
+ },
   "frameworks": {
-    "net451": {
-    },
-    "dnxcore50": {
+    "net46": {},
+    "netcoreapp1.1": {
       "dependencies": {
-        "NETStandard.Library": "1.0.0-*"
-      }    }
+        "Microsoft.NETCore.App": {
+          "version": "1.1.0",
+          "type": "platform"
+        }
+      }
+    }
   }
 }

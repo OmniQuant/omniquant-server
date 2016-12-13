@@ -1,0 +1,19 @@
+{
+  "name": "quantweb",
+  "private": true,
+  "dependencies": {
+    "jquery": "2.0.3",
+    "jquery-ui": "1.12.1",
+    "bootstrap": "3.3.7",
+    "fuelux": "3.13.0",
+    "datatables.net": "1.10.12",
+    "bootstrap-select": "1.11.2",
+    "jqPropertyGrid": "ValYouW/jqPropertyGrid",
+    "highstock": "highcharts/highstock-release#5.0.5",
+    "codemirror": "5.21.0",
+    "jquery.layout.js": "http://layout.jquery-dev.com/lib/js/jquery.layout-latest.js",
+    "jquery.layout.css": "http://layout.jquery-dev.com/lib/css/layout-default-latest.css",
+    "linq.js": "mojodna/linq.js",
+    "datatables.net-bs": "^1.10.12"
+  }
+}
